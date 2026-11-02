@@ -1,0 +1,49 @@
+<main class="auth-layout">
+  <section class="auth-showcase">
+    <div class="auth-brand">
+      <div class="auth-brand-mark"><span></span><span></span><span></span></div>
+      <div><strong>wa<span>workspace</span></strong><small>DESKTOP AUTOMATION</small></div>
+    </div>
+    <div class="auth-showcase-copy">
+      <div class="auth-eyebrow">YOUR LOCAL WORKSPACE</div>
+      <h1>One workspace.<br><span>More control.</span></h1>
+      <p>Organize group records, manage consent-aware contacts and review visible-screen captures from one desktop workspace.</p>
+      <div class="auth-feature-list">
+        <div><i>✓</i><span><strong>Private local database</strong><small>Your workspace records remain on this computer.</small></span></div>
+        <div><i>✓</i><span><strong>Operator-controlled workflows</strong><small>WhatsApp actions stay visible and require your confirmation.</small></span></div>
+        <div><i>✓</i><span><strong>Review before saving</strong><small>OCR candidates are not saved until you approve them.</small></span></div>
+      </div>
+    </div>
+    <div class="auth-showcase-footer">LOCAL DESKTOP MODE <span>•</span> NO CLOUD ACCOUNT SERVICE</div>
+  </section>
+  <section class="auth-form-side">
+    <div class="auth-form-wrap">
+      <div class="auth-mobile-brand">WA WORKSPACE</div>
+      <div class="auth-eyebrow" id="auth-eyebrow">GET STARTED</div>
+      <h2 id="auth-title">Create your account</h2>
+      <p class="auth-subtitle" id="auth-subtitle">Set up a local account to unlock this workspace.</p>
+      <div class="auth-alert" id="auth-alert" role="alert" hidden></div>
+      <form id="auth-form" novalidate>
+        <div class="auth-field" id="auth-name-field">
+          <label for="auth-name">FULL NAME</label>
+          <input id="auth-name" name="full_name" type="text" maxlength="80" autocomplete="name" placeholder="Your name">
+        </div>
+        <div class="auth-field">
+          <label for="auth-email">EMAIL ADDRESS</label>
+          <input id="auth-email" name="email" type="email" maxlength="254" autocomplete="username" required placeholder="you@example.com">
+        </div>
+        <div class="auth-field">
+          <label for="auth-password">PASSWORD</label>
+          <input id="auth-password" name="password" type="password" minlength="12" maxlength="256" autocomplete="current-password" required placeholder="At least 12 characters">
+        </div>
+        <div class="auth-field" id="auth-confirm-field">
+          <label for="auth-confirm">CONFIRM PASSWORD</label>
+          <input id="auth-confirm" name="confirm_password" type="password" minlength="12" maxlength="256" autocomplete="new-password" placeholder="Enter password again">
+        </div>
+        <button class="auth-submit" id="auth-submit" type="submit">Create local account <span>→</span></button>
+      </form>
+      <div class="auth-switch" id="auth-switch-copy">Already have an account? <button type="button" id="auth-mode-toggle">Sign in</button></div>
+      <div class="auth-local-note"><span>◇</span><p><strong>Local account notice</strong>Your account is stored in this app's SQLite database. There is no email verification, cloud sync or password-reset email. Only one local account is supported in this version.</p></div>
+    </div>
+  </section>
+</main>

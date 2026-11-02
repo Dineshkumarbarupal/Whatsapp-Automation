@@ -8,6 +8,7 @@ from typing import Any
 from core.config import DB_PATH, load_settings, save_settings
 from db.database import Database
 from db.repositories import Repository
+from py.services.auth import LocalAuthService
 from py.services.consent import OperatorAuthorization
 from py.services.contacts import export_contacts_csv, parse_contacts_csv
 from py.services.member_capture import MemberCaptureManager
@@ -16,13 +17,14 @@ from py.services.whatsapp_gui import WhatsAppGUIDriver
 
 
 class ApplicationServices:
-    """Register the local desktop bridge used by the Eel front end."""
+    """Register the authenticated local desktop bridge used by the Eel front end."""
 
     def __init__(self, logger: logging.Logger):
         self.logger = logger
         self.database = Database(DB_PATH)
         self.database.initialize()
         self.repo = Repository(self.database.connect)
+        self.auth = LocalAuthService(self.database.connect)
         self.authorization = OperatorAuthorization()
         self.member_captures = MemberCaptureManager(ttl_seconds=900)
 
@@ -30,21 +32,61 @@ class ApplicationServices:
         return {"ok": True, "message": message, "data": data}
 
     def _error(self, exc: Exception) -> dict[str, Any]:
-        self.logger.exception("Desktop bridge request failed")
+        self.logger.warning("Desktop bridge request rejected: %s", exc)
         try:
             self.repo.record_audit("desktop_bridge_error", "error", str(exc))
         except Exception:
             self.logger.exception("Could not record bridge error")
         return {"ok": False, "message": str(exc), "data": None}
 
-    def _guard(self, action):
+    def _guard(self, action, require_auth: bool = True):
         try:
+            if require_auth:
+                self.auth.require_authenticated()
             return self._ok(action())
         except Exception as exc:
             return self._error(exc)
 
     def register(self, eel) -> None:
         expose = eel.expose
+
+        @expose
+        def get_auth_state():
+            return self._guard(self.auth.state, require_auth=False)
+
+        @expose
+        def register_account(full_name, email, password, confirm_password):
+            def action():
+                user = self.auth.register(full_name, email, password, confirm_password)
+                self.repo.record_audit(
+                    "account_registered", "success",
+                    "Created local account: " + user["email"],
+                )
+                return {"user": user}
+            return self._guard(action, require_auth=False)
+
+        @expose
+        def login_account(email, password):
+            def action():
+                user = self.auth.login(email, password)
+                self.repo.record_audit(
+                    "account_signed_in", "success",
+                    "Local account signed in: " + user["email"],
+                )
+                return {"user": user}
+            return self._guard(action, require_auth=False)
+
+        @expose
+        def logout_account():
+            def action():
+                user = self.auth.require_authenticated()
+                self.repo.record_audit(
+                    "account_signed_out", "success",
+                    "Local account signed out: " + user["email"],
+                )
+                self.auth.logout()
+                return {"logged_out": True}
+            return self._guard(action, require_auth=False)
 
         @expose
         def get_dashboard_stats():
@@ -75,7 +117,7 @@ class ApplicationServices:
                 records, warnings = parse_contacts_csv(str(csv_content or ""))
                 imported = 0
                 for record in records:
-                    member_id = self.repo.upsert_member(
+                    self.repo.upsert_member(
                         record.phone, record.display_name, record.consent_status, record.source
                     )
                     imported += 1
@@ -118,10 +160,7 @@ class ApplicationServices:
                 group = str(group_name or "").strip()
                 if not group or len(group) > 80:
                     raise ValueError("Group label must contain 1 to 80 characters.")
-                valid = []
-                for item in candidates:
-                    if isinstance(item, dict):
-                        valid.append(item)
+                valid = [item for item in candidates if isinstance(item, dict)]
                 result = self.repo.save_member_observations(group, valid)
                 self.repo.record_audit("member_observations_saved", "success", f"Saved {result['saved']} reviewed rows.")
                 return result

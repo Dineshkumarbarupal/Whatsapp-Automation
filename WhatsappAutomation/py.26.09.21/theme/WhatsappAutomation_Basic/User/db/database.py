@@ -5,12 +5,22 @@ from contextlib import contextmanager, closing
 from pathlib import Path
 from typing import Iterator
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS schema_meta (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name TEXT NOT NULL,
+    email TEXT NOT NULL COLLATE NOCASE UNIQUE,
+    password_salt TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    password_iterations INTEGER NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_login_at TEXT
 );
 CREATE TABLE IF NOT EXISTS groups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,6 +80,7 @@ CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_events(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_group_members_member ON group_members(member_id);
 CREATE INDEX IF NOT EXISTS idx_member_observations_group ON member_observations(group_id, last_seen_at DESC);
 CREATE INDEX IF NOT EXISTS idx_member_observations_phone ON member_observations(phone);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 """
 
 
