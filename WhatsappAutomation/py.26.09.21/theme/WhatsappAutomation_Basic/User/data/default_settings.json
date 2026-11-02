@@ -1,0 +1,9 @@
+{
+  "theme": "dark",
+  "language": "en",
+  "ocr_language": "eng",
+  "tesseract_cmd": "",
+  "automation_delay_seconds": 1.0,
+  "screenshot_retention_days": 0,
+  "require_confirmation_for_gui_actions": true
+}
