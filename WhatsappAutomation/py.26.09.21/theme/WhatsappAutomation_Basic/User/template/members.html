@@ -1,0 +1,22 @@
+<section class="page-heading compact-heading">
+  <div><div class="eyebrow">CONTACT DIRECTORY</div><h1>Members<span class="heading-period">.</span></h1><p class="page-subtitle">Manage consented contacts and review visible participant-list observations.</p></div>
+  <div class="heading-actions"><button class="button button-secondary" id="export-members">Export contacts CSV</button><button class="button button-primary" id="import-members"><span>＋</span> Import contacts</button><input type="file" id="csv-file" accept=".csv,text/csv" hidden></div>
+</section>
+<section class="panel table-panel">
+  <div class="table-toolbar"><div><h2>Contact directory</h2><p id="member-count-label">Saved local contacts</p></div><label class="table-search"><span>⌕</span><input id="member-search" placeholder="Search name or number…"></label></div>
+  <div class="table-scroll"><table class="data-table"><thead><tr><th>MEMBER</th><th>PHONE</th><th>CONSENT</th><th>GROUPS</th><th>SOURCE</th></tr></thead><tbody id="members-table-body"><tr><td colspan="5" class="table-empty">Loading members…</td></tr></tbody></table></div>
+</section>
+<section class="panel ocr-panel">
+  <div class="ocr-panel-copy"><div class="ocr-icon">▧</div><div><h2>Multi-page participant OCR</h2><p>Capture one visible screen at a time. Manually scroll the participant list in WhatsApp Web between captures. Duplicate observations are merged in this session.</p></div></div>
+  <label class="field-label">WHATSAPP GROUP LABEL<input id="ocr-group-name" maxlength="80" placeholder="Enter the exact group name you are authorized to review"></label>
+  <label class="authorization-check"><input type="checkbox" id="ocr-capture-authorization"><span>I am authorized to view this group's participant list and process the displayed details. I will save only records I am permitted to retain.</span></label>
+  <div class="heading-actions"><button class="button button-secondary" id="start-member-capture">Start capture session</button><button class="button button-primary" id="capture-member-page" disabled>Capture visible page</button><button class="button button-ghost" id="discard-member-capture" disabled>Discard session</button></div>
+  <p id="capture-status" class="page-subtitle">No active capture session.</p>
+  <div id="ocr-review" class="ocr-review hidden"></div>
+  <div class="info-banner"><span>◇</span><p><strong>How to capture multiple pages:</strong> Open the group's participant list in the visible browser. Click Capture visible page, inspect the results, manually scroll down inside WhatsApp, and repeat. The app does not auto-scroll, access hidden data, save screenshots, or scrape in the background. OCR may misread names/numbers.</p></div>
+</section>
+<section class="panel table-panel">
+  <div class="table-toolbar"><div><h2>Saved group observations</h2><p id="observation-count-label">Reviewed visible-list entries</p></div><button class="button button-secondary" id="export-observations">Export observations CSV</button></div>
+  <div class="table-scroll"><table class="data-table"><thead><tr><th>GROUP</th><th>DISPLAY NAME</th><th>PHONE AS SHOWN</th><th>OCR CONFIDENCE</th><th>PAGES</th><th>LAST SEEN</th></tr></thead><tbody id="observations-table-body"><tr><td colspan="6" class="table-empty">Loading observations…</td></tr></tbody></table></div>
+</section>
+<div class="info-banner"><span>◇</span><p>OCR observations are separate from the consented contact directory. A visible name or number is not proof of consent or permission for outreach. Obtain any required consent and follow applicable privacy requirements before using/exporting the data.</p></div>

@@ -1,0 +1,25 @@
+<section class="page-heading compact-heading"><div><div class="eyebrow">VISIBLE DESKTOP CONTROL</div><h1>GUI automation<span class="heading-period">.</span></h1><p class="page-subtitle">Assistive, operator-supervised actions in your visible WhatsApp Web session.</p></div><span class="mode-chip"><i></i> VISIBLE MODE ONLY</span></section>
+<div class="automation-layout">
+  <section class="panel automation-main">
+    <div class="panel-heading"><div><h2>WhatsApp session</h2><p>Open WhatsApp Web and sign in manually.</p></div><span class="session-status"><i></i> Manual sign-in</span></div>
+    <div class="session-card"><div class="whatsapp-mark">◉</div><div><strong>WhatsApp Web</strong><small>web.whatsapp.com · visible browser window</small></div><button class="button button-primary" id="open-whatsapp">Open WhatsApp Web ↗</button></div>
+    <div class="section-divider"></div>
+    <div class="panel-heading"><div><h2>Create a WhatsApp group</h2><p>Use the active WhatsApp Web window. Review numbers before running.</p></div></div>
+    <form id="create-group-form" class="automation-form">
+      <label class="field-label">GROUP NAME<input id="wa-group-name" required maxlength="80" placeholder="e.g. Project Team"></label>
+      <label class="field-label">PARTICIPANT PHONE NUMBERS<textarea id="wa-group-participants" required rows="3" placeholder="+919876543210, +919812345678"></textarea><small>Use international format. Separate numbers with commas or new lines. Maximum 20 per supervised run.</small></label>
+      <button class="button button-primary" type="submit">Start group creation sequence <span>→</span></button>
+    </form>
+    <div class="section-divider"></div>
+    <div class="panel-heading"><div><h2>Add members to the open group</h2><p>First open the intended group in WhatsApp Web, then run this action.</p></div></div>
+    <form id="add-members-form" class="automation-form">
+      <label class="field-label">PARTICIPANT PHONE NUMBERS<textarea id="add-participants" required rows="2" placeholder="+919876543210"></textarea></label>
+      <button class="button button-secondary" type="submit">Add to currently open group <span>→</span></button>
+    </form>
+  </section>
+  <aside class="panel safety-panel"><div class="safety-shield">◇</div><h2>Before you run</h2><p>These actions operate your visible desktop session. WhatsApp UI labels can change; verify the final result in WhatsApp.</p>
+    <ul class="safety-list"><li><span>01</span> Sign in to your own WhatsApp account manually.</li><li><span>02</span> Only manage groups you own or are authorized to administer.</li><li><span>03</span> Add only people who expect or have agreed to join.</li><li><span>04</span> Keep the browser window visible and do not touch the mouse or keyboard while a sequence runs.</li></ul>
+    <label class="authorization-check"><input type="checkbox" id="operator-authorization"><span>I confirm that I am authorized to manage the selected group and participant data, and that adding these participants is expected and permitted.</span></label>
+    <div class="safety-footer"><span class="status-dot"></span> Authorization is session-scoped and expires after 30 minutes.</div>
+  </aside>
+</div>
