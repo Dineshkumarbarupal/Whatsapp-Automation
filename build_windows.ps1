@@ -44,7 +44,7 @@ $buildArgs = @(
     "--windowed",
     "--name", "WhatsAppWorkspace",
     "--icon", $iconPath,
-    "--add-data", "$appRoot;User",
+    "--add-data", "$appRoot;.",
     "--paths", $appRoot,
     "--collect-all", "eel",
     "--collect-all", "bottle",
