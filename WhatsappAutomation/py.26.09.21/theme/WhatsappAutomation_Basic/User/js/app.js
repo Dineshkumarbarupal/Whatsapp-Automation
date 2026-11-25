@@ -164,6 +164,6 @@
       document.getElementById('content-root').innerHTML = '<div class="error-panel"><h2>Workspace startup error</h2><p>' + escapeHtml(error.message) + '</p></div>';
     }
   }
-  window.WAWorkspace = { call, toast, escapeHtml, loadPage };
+  window.WAWorkspace = { call, toast, escapeHtml, loadPage, statTemplate: () => componentCache.stat };
   document.addEventListener('DOMContentLoaded', boot);
 })();
