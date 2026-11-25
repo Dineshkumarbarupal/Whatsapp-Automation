@@ -2,15 +2,24 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 APP_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = APP_DIR / "data"
-DB_DIR = APP_DIR / "db"
-RUNTIME_DIR = APP_DIR / "Runtime"
+if getattr(sys, "frozen", False):
+    USER_DATA_DIR = Path(
+        os.environ.get("LOCALAPPDATA", str(Path.home() / "AppData" / "Local"))
+    ) / "WhatsAppWorkspace"
+else:
+    USER_DATA_DIR = APP_DIR
+
+DATA_DIR = USER_DATA_DIR / "data"
+DB_DIR = USER_DATA_DIR / "db"
+RUNTIME_DIR = USER_DATA_DIR / "Runtime"
 LOG_DIR = RUNTIME_DIR / "logs"
 DB_PATH = DB_DIR / "whatsapp_automation.sqlite3"
 SETTINGS_PATH = DATA_DIR / "settings.json"

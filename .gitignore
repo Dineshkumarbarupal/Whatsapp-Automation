@@ -12,3 +12,5 @@ htmlcov/
 *.log
 WhatsappAutomation/py.26.09.21/theme/WhatsappAutomation_Basic/User/Runtime/logs/*
 !WhatsappAutomation/py.26.09.21/theme/WhatsappAutomation_Basic/User/Runtime/logs/.gitkeep
+build/
+dist/

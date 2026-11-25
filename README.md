@@ -134,9 +134,24 @@ No WhatsApp login, network access or desktop interaction is needed for the unit 
 
 Do not attempt to reach global scale by adding threads to a desktop GUI automation process. WhatsApp GUI automation itself remains a single visible desktop session and is not a horizontally scalable workload.
 
-## Build a Windows executable
+## Build a Windows desktop app with its icon
 
-EXE packaging is not yet part of the verified Phase 1 build. A future packaging pass should bundle the app's web assets, verify Chrome/Eel startup, handle the Tesseract dependency separately, and test the output on a clean Windows machine. Do not assume a PyInstaller build is production-ready until those checks pass.
+The repository includes `asset/logo.svg` and a Windows multi-resolution `asset/logo.ico`. The icon is embedded into the packaged executable and the build script creates a **WhatsApp Workspace** shortcut on the current Windows user's Desktop.
+
+1. Open PowerShell in the repository root.
+2. Run:
+
+   ```powershell
+   .\build_windows.ps1
+   ```
+
+3. The executable is created at `dist\WhatsAppWorkspace\WhatsAppWorkspace.exe`; a Desktop shortcut is created automatically.
+
+The script creates a local `.venv` if needed, installs the project requirements and PyInstaller, then builds an onedir Windows app. Google Chrome/Chromium must still be installed because the desktop UI uses Eel's Chrome mode. Tesseract remains an optional external dependency for OCR and must be installed/configured separately.
+
+When running as a packaged executable, the SQLite database, settings and logs are stored under `%LOCALAPPDATA%\WhatsAppWorkspace` so they persist outside PyInstaller's bundled resource directory. Source-mode runs continue to use the application directory.
+
+The HTML entry page also references the SVG favicon and web app manifest. This provides the same branding to browser/Chrome app surfaces that use web icons. Build output is not included in Git; rebuild on a Windows machine and verify it there before distribution.
 
 ## Project status
 
